@@ -1,7 +1,3 @@
-import pytorch_lightning
-import torch
-
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -24,7 +20,7 @@ class CNNClassifier(nn.Module):
         x = self.pool(x) #(B, 32, 14, 14)
         x = F.relu(self.conv2(x)) # (B, 64, 14, 14) 
         x = self.pool(x) # (B, 64, 7, 7)
-        x = x.view(-1, 64 * 7 * 7)  # Flatten the tensor, combine batches (B, 65)
-        x = F.relu(self.fc1(x))
-        x = self.fc2(x)
+        x = x.view(-1, 64 * 7 * 7)  # Flatten the tensor, combine batches (B, 64 * 7 * 7)
+        x = F.relu(self.fc1(x)) # (B, 128)
+        x = self.fc2(x) #(B, num_classes)
         return x
