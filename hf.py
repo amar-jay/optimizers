@@ -33,3 +33,8 @@ class CNNClassifierModel(PreTrainedModel, nn.Module):
         x = F.relu(self.fc1(x)) # (B, 128)
         x = self.fc2(x) #(B, num_classes)
         return x
+
+
+# Instantiate the model with the config
+config = CNNClassifierConfig(num_classes=10)
+model = CNNClassifierModel(config)

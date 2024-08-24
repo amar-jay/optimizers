@@ -1,7 +1,7 @@
 import pytorch_lightning as L
 import torch
 from dataset import get_dataloader
-from model import CNNClassifier
+from hf import CNNClassifier
 import torch.nn.functional as F
 from torchmetrics.functional import accuracy
 # print(pytorch_lightning.cuda)
