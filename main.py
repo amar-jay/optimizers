@@ -1,7 +1,7 @@
 import pytorch_lightning as L
 import torch
 from dataset import get_dataloader
-from hf import CNNClassifier
+from model import CNNClassifierModel, CNNClassifierConfig
 import torch.nn.functional as F
 from torchmetrics.functional import accuracy
 # print(pytorch_lightning.cuda)
@@ -11,7 +11,7 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Device: ", device)
 print("\n\n")
-# model = CNNClassifier()
+# model = CNNClassifierModel()
 # model.to(device)
 # print("num of parameters: ", model.num_parameters())
 # res = model(torch.randn((64, 1, 28,28)))
@@ -27,7 +27,8 @@ print("\n\n")
 class LitClassifier(L.LightningModule):
     def __init__(self):
         super().__init__()
-        self.model = CNNClassifier()
+        config = CNNClassifierConfig()
+        self.model = CNNClassifierModel(config)
     def forward(self, x):
         return self.model(x) # forward step -> meant for inference only
 
@@ -75,7 +76,7 @@ checkpoint_callback = ModelCheckpoint(
 if __name__ == "__main__":
     _type = input("train / inference, yes if training (y/N): ")
     if _type == "y":
-        model = CNNClassifier()
+        model = CNNClassifierModel()
         lit_model = LitClassifier(model)
         trainer = L.Trainer(max_epochs=10, callbacks=[checkpoint_callback])
         train, val, test = get_dataloader()

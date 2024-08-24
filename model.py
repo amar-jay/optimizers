@@ -1,6 +1,5 @@
 from transformers import PreTrainedModel, PretrainedConfig
 import torch.nn as nn
-from model import CNNClassifier
 import torch.nn.functional as F
 
 class CNNClassifierConfig(PretrainedConfig):
@@ -9,9 +8,7 @@ class CNNClassifierConfig(PretrainedConfig):
         self.num_classes = num_classes
 
 
-
-
-class CNNClassifierModel(PreTrainedModel, nn.Module):
+class CNNClassifierModel(PreTrainedModel):
     def __init__(self, config):
         super().__init__(config)
         self.conv1 = nn.Conv2d(in_channels=1, out_channels=32, kernel_size=3, stride=1, padding=1)
