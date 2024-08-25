@@ -49,7 +49,7 @@ def train(optim, f, **kwargs):
 
 if __name__ == "__main__":
     from sgd import StochasticGradientDescent, SGDWithMomentum
-    from rms import RMSProp
+    from rms import RMSProp, Adam
     with open('metrics.log', 'w', newline='') as f:
         for i in range(1):
             dataset = Data()
@@ -57,4 +57,5 @@ if __name__ == "__main__":
             train(SGDWithMomentum,f, momentum=0.9)
             train(SGDWithMomentum, f, momentum=0.9, nestrov=True)
             train(RMSProp,f)
+            train(Adam,f)
 
