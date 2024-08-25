@@ -1,0 +1,4 @@
+StochasticGradientDescent,  90.000,   720,   1.252
+SGDWithNestrov      , 100.000,   780,   1.152
+SGDWithNestrov      , 100.000,   180,   1.522
+RMSProp             ,  20.000,  5040,   7.801

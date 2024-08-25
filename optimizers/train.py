@@ -8,10 +8,10 @@ from torch.utils.data import DataLoader
 
 
 
-def train(optim, **kwargs):
+def train(optim, f, **kwargs):
     model = LinearRegressionModel(1,1)
     dataloader = DataLoader(dataset, batch_size=1, shuffle=True)
-    optimizer = optim(model.parameters(), lr=0.01, **kwargs)
+    optimizer = optim(model.parameters(), **kwargs)
     epoch = 0
     # training loop
     print("Training...")
@@ -41,14 +41,20 @@ def train(optim, **kwargs):
         mean += torch.abs(y_hat - y)
         if torch.abs(y_hat - y) < 0.2:
             accuracy += 1
-        print(f'Prediction: {y_hat.item():.3f}, Actual: {y.item():.3f}')
+        print(f'Prediction: {y_hat.item():8.3f} Actual: {y.item():8.3f}')
 
-    print(f'mean difference: {(mean*100/10).item():.3f}%, accuracy: {accuracy*10}%, Number of epochs: {epoch}, optimizer: {optimizer.__class__.__name__}')
+    print(f'mean difference: {(mean*100/10).item():.3f}%\taccuracy: {accuracy*10}%\tnumber of epochs: {epoch}\toptimizer: {optimizer.__class__.__name__}')
+    f.write(f'{optimizer.__class__.__name__:20},{accuracy*10:8.3f},{epoch:6},{mean.item():8.3f}\n')
+    print("\n\n")
 
 if __name__ == "__main__":
-    from sgd_with_mom import SGDWithMomentum
-    from sgd import StochasticGradientDescent
-    dataset = Data()
-    train(StochasticGradientDescent)
-    train(SGDWithMomentum, momentum=0.9)
-    train(SGDWithMomentum, momentum=0.9, nestrov=True)
+    from sgd import StochasticGradientDescent, SGDWithMomentum
+    from rms import RMSProp
+    with open('metrics.log', 'w', newline='') as f:
+        for i in range(1):
+            dataset = Data()
+            train(StochasticGradientDescent, f)
+            train(SGDWithMomentum,f, momentum=0.9)
+            train(SGDWithMomentum, f, momentum=0.9, nestrov=True)
+            train(RMSProp,f)
+
