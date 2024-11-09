@@ -14,5 +14,5 @@ def get_dataloader(batch_size=64):
     
     train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True,  num_workers=8)
     test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False,  num_workers=8)
-    val_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=False,  num_workers=8)
+    val_loader = DataLoader(dataset=val_dataset, batch_size=batch_size, shuffle=False,  num_workers=8)
     return train_loader, val_loader, test_loader
