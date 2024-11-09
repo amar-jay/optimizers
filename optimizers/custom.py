@@ -1,11 +1,11 @@
-import torch
 from typing import Any
+import torch
 
-
-class StochasticGradientDescent(torch.optim.Optimizer): 
+# https://www.geeksforgeeks.org/custom-optimizers-in-pytorch/
+class CustomOptimizer(torch.optim.Optimizer): 
     def __init__(self, params, lr=1e-3):
         defaults = dict(lr=lr) 
-        super(StochasticGradientDescent, self).__init__(params, defaults) 
+        super().__init__(params, defaults) 
   
     def step(self, closure=None)->Any: 
         if closure is not None: 
@@ -16,7 +16,7 @@ class StochasticGradientDescent(torch.optim.Optimizer):
             for p in group['params']: 
                 if p.grad is None: 
                     continue
-                p.data.add_(p.grad, alpha=-group['lr'])
-
-
+                #p.data -= group['lr']*p.grad.data
+                p.data.add_(-p['lr'], p.grad)
+  
 

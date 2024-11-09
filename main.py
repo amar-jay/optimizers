@@ -2,6 +2,7 @@ import pytorch_lightning as L
 import torch
 from dataset import get_dataloader
 from model import CNNClassifierModel, CNNClassifierConfig
+from optimizers import adam
 import torch.nn.functional as F
 from torchmetrics.functional import accuracy
 # print(pytorch_lightning.cuda)
@@ -62,7 +63,8 @@ class LitClassifier(L.LightningModule):
 
 
     def configure_optimizers(self):
-        optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3)
+        # optimizer = torch.optim.AdamW(self.parameters(), lr=1e-3)
+        optimizer = adam.Adam(self.parameters(), lr=1e-3)
         return optimizer
 
 # Define the checkpoint callback

@@ -48,14 +48,17 @@ def train(optim, f, **kwargs):
     print("\n\n")
 
 if __name__ == "__main__":
-    from sgd import StochasticGradientDescent, SGDWithMomentum
-    from rms import RMSProp, Adam
+    from sgd import StochasticGradientDescent
+    from sgd_mom import SGDWithMomentum
+    from rms import RMSProp
+    from adam import Adam
+
     with open('metrics.log', 'w', newline='') as f:
         for i in range(1):
             dataset = Data()
-            train(StochasticGradientDescent, f)
-            train(SGDWithMomentum,f, momentum=0.9)
-            train(SGDWithMomentum, f, momentum=0.9, nestrov=True)
-            train(RMSProp,f)
-            train(Adam,f)
+            train(StochasticGradientDescent, f)# Vanilla Stochastic Gradient Descent Optimizer
+            train(SGDWithMomentum,f, momentum=0.9) # Stochastic Gradient Descent with moementum Optimizer
+            train(SGDWithMomentum, f, momentum=0.9, nestrov=True) # Nestrov Stochastic Gradient Descent Optimizer
+            train(RMSProp,f) # Root Mean Square optimizer
+            train(Adam,f) # Adam Optimizer
 
